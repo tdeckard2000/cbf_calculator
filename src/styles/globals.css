@@ -8,13 +8,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  height: 100vh;
-  max-height: -webkit-fill-available;
-  /* ios viewport bug fix */
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
-
-/* @supports (-webkit-touch-callout: none) {
-  body {
-    height: -webkit-fill-available;
-  }
-} */
