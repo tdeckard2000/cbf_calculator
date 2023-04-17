@@ -2,8 +2,22 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.scss'
 import HeaderComponent from '@/components/header'
+import { useEffect } from 'react'
 
 export default function Home() {
+  // ios viewport fix
+  const appHeight = () => {
+    console.log("height reset")
+    const doc = document.documentElement;
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+  }
+
+  useEffect(() => {
+    // ios viewport fix
+    window.addEventListener('resize', appHeight);
+    appHeight();
+  })
+  
   return (
     <>
       <Head>
