@@ -1,0 +1,9 @@
+.main {
+    align-items: center;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    // justify-content: space-around;
+    justify-items: center;
+    height: 100px;
+}

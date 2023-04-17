@@ -1,0 +1,192 @@
+.main {
+  
+}
+
+.sectionTitle {
+    align-items: center;
+    background-color: #2e2e2eb3;
+    color: white;
+    display: flex;
+    padding: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    justify-content: center;
+    flex-direction: column;
+
+    .leafIcon {
+        filter: invert(1);
+    }
+}
+
+.calcBg {
+    background-image: url("../../public/turfBG2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 0;
+    height: calc(100vh - 100px);
+
+    .calcBackdrop {
+        background-color: rgba(0, 0, 0, 0.445);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(100% - 85px);
+        width: 100%;
+    }
+}
+
+.calcContainer {
+    align-items: center;
+    display: flex;
+    background-color: #eef3f4f2;
+    box-shadow: 1px 1px 10px #0000009e;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 20px;
+    height: calc(100% - 30px);
+    min-width: 300px;
+    max-width: 500px;
+    width: calc(100% - 30px);
+
+    .topContainer {
+        width: 100%;
+
+        label {
+            color: black;
+            display: block;
+            padding: 10px 0;
+            font-size: 20px;
+            font-weight: 300;
+            font-family: inherit;
+            width: 100%;
+        }
+    
+        input {
+            align-self: start;
+            // background-color: #66c3c5;
+            background-color: #555555b3;
+            border: none;
+            border-radius: 0;
+            color: white;
+            padding: 0 20px;
+            font-size: 20px;
+            font-family: inherit;
+            font-weight: 600;
+            height: 50px;
+            text-align: center;
+            width: 100%;
+    
+            &:focus-visible {
+                outline: none;
+            }
+    
+            &:focus {
+                background-color: #2e2e2eb3;
+            }
+
+            &:hover {
+                background-color: #2e2e2eb3;
+            }
+        }
+    }
+
+}
+
+.resultsContainer {
+    bottom: 0;
+    position: relative;
+    height: fit-content;
+    width: 100%;
+
+    .row {
+        // border-bottom: 2px solid #00ceee6b;
+        border-bottom: 1px solid #555555b3;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        height: 35px;
+
+        .rowLabel {
+            font-weight: 500;
+        }
+
+        .cost {
+            text-decoration: line-through;
+        }
+
+        .costLowered {
+            margin-left: 10px;
+            font-weight: 600;
+        }
+    }
+
+    .discountBlock {
+        margin: auto;
+        background-color: #3db2e4;
+        color: white;
+        display: flex;
+        justify-content: center;
+        width: 200px;
+
+        .text {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            font-weight: 500;
+            padding: 15px;
+        }
+    
+        img {
+            margin-left: 10px;
+            filter: invert(1);
+        }
+    }
+
+    .rowLabel {
+        font-weight: 500;
+    }
+
+    .cost {
+
+    }
+}
+
+.buttonsContainer {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 5px;
+    justify-content: space-between;
+    width: 100%;
+
+    .clear {
+        background-color: #555555b3;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-family: inherit;
+        margin-top: 20px;
+        height: 50px;
+        flex-grow: 1;
+
+        &:hover {
+            background-color: #2e2e2eb3;
+        }
+    }
+
+    .calculate {
+        background-color: #3db2e4;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-family: inherit;
+        margin-top: 20px;
+        height: 50px;
+        flex-grow: 1;
+
+        &:hover {
+            background-color: #379dc9;
+        }
+    }
+}
