@@ -1,0 +1,147 @@
+.bgCover {
+    background-color: rgba(0, 0, 0, 0.259);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    // pointer-events: none;
+}
+
+.closeButton {
+    background: transparent;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    border: none;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    opacity: .8;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.modalContainer {
+    display: flex;
+    align-items: center;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.609);
+    flex-direction: column;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 300px;
+    background-color: #ffffff;
+    // border: 1px solid;
+    padding: 30px;
+    position: absolute;
+    z-index: 1000;
+
+    h1 {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 300;
+    }
+
+    .buttonContainer {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        column-gap: 5px;
+        width: 100%;
+
+        .clearButton {
+            font-size: 14px;
+            background-color: #555555b3;
+            border: none;
+            color: white;
+            width: fit-content;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 20px;
+            padding: 15px;
+            width: 100%;
+            height: 50px;
+            
+            &:hover {
+                background-color: #2e2e2eb3;
+            }
+        }
+
+        .applyButton {
+            font-size: 14px;
+            background-color: #3db2e4;
+            border: none;
+            color: white;
+            width: fit-content;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 20px;
+            padding: 15px;
+            width: 100%;
+            height: 50px;
+
+            &:hover {
+                background-color: #379dc9;
+            }
+        }
+    }
+
+
+    .inputContainer {
+        position: relative;
+
+        input {
+            background-color: #a5a5a5;
+            border: none;
+            border-radius: 0;
+            color: white;
+            font-size: 20px;
+            font-family: inherit;
+            font-weight: 600;
+            height: 50px;
+            text-align: center;
+            width: 100%;
+            margin-top: 20px;
+
+            &:focus-visible {
+                outline: none;
+            }
+
+            &:focus {
+                background-color: #555555b3;
+            }
+
+            &:hover {
+                background-color: #555555b3;
+            }   
+        }
+
+        .percentSymbol {
+            color: white;
+            position: absolute;
+            font-size: 20px;
+            font-weight: 600;
+            bottom: 0;
+            right: 20px;
+            bottom: 10px;
+        }
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
+}

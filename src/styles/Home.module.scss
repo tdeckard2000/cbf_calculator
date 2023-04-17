@@ -67,8 +67,7 @@
     
         input {
             align-self: start;
-            // background-color: #66c3c5;
-            background-color: #555555b3;
+            background-color: #a5a5a5;
             border: none;
             border-radius: 0;
             color: white;
@@ -85,15 +84,26 @@
             }
     
             &:focus {
-                background-color: #2e2e2eb3;
+                background-color: #555555b3;
             }
 
             &:hover {
-                background-color: #2e2e2eb3;
+                background-color: #555555b3;
             }
         }
     }
 
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
 }
 
 .resultsContainer {
@@ -132,8 +142,9 @@
 
     .discountBlock {
         margin: 0 auto;
-        background-color: #3db2e4;
-        color: white;
+        // background-color: #3db2e4;
+        // color: white;
+        color: black;
         display: flex;
         justify-content: center;
         // width: 200px;
@@ -143,7 +154,7 @@
             display: flex;
             justify-content: center;
             font-weight: 400;
-            font-size: 14px;
+            font-size: 16px;
             padding: 15px;
         }
     

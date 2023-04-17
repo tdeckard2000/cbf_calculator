@@ -2,21 +2,38 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.scss'
 import HeaderComponent from '@/components/header'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import DiscountModalComponent from '@/components/discountModal'
 
 export default function Home() {
-  // // ios viewport fix
-  // const appHeight = () => {
-  //   console.log("height reset")
-  //   const doc = document.documentElement;
-  //   doc.style.setProperty('--app-height', `${window.innerHeight}px`)
-  // }
 
-  // useEffect(() => {
-  //   // ios viewport fix
-  //   window.addEventListener('resize', appHeight);
-  //   appHeight();
-  // })
+  const [discountModalOpen, setDiscountModalOpen] = useState<boolean>(false);
+  const [discountPercentage, setDiscountPercentage] = useState<number>(0);
+  const [initialCostPer, setInitialCostPer] = useState<number>(1.85);
+  const [recurringCostPer, setRecurringCostPer] = useState<number>(1.5);
+  const [initialTotal, setInitialTotal] = useState<number>(0);
+  const [recurringTotal, setRecurringTotal] = useState<number>(0);
+  const [discountedInitialTotal, setDiscountedInitialTotal] = useState<number>(0);
+  const [discountedRecurringTotal, setDiscountedRecurringTotal] = useState<number>(0);
+  
+  const calculateTotals = () => {
+    const squareFeet = Number((document.getElementById("squareFeet") as HTMLInputElement).value);
+    const initialTotal = Number((squareFeet * initialCostPer).toFixed(0));
+    const recurringTotal = Number((squareFeet * recurringCostPer).toFixed(0));
+    setInitialTotal(initialTotal);
+    setRecurringTotal(recurringTotal);
+    
+    if(discountPercentage > 0){
+      const discountedInitialTotal = Number((initialTotal - (initialTotal * (discountPercentage * .01))).toFixed(0));
+      const discountedRecurringTotal = Number((recurringTotal - (recurringTotal * (discountPercentage * .01))).toFixed(0));
+      setDiscountedInitialTotal(discountedInitialTotal);
+      setDiscountedRecurringTotal(discountedRecurringTotal);
+    }
+  }
+
+  const closeModal = () => {
+    setDiscountModalOpen(false);
+  }
   
   return (
     <>
@@ -28,6 +45,13 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <HeaderComponent></HeaderComponent>
+        <div style={{display: discountModalOpen ? "block" : "none"}}>
+          <DiscountModalComponent
+            closeCallback={closeModal}
+            setDiscountPercentage={setDiscountPercentage}
+            // currentDiscountPercentage={discountPercentage}
+          ></DiscountModalComponent>
+        </div>
         <div className={styles.calcBg}>
           <div className={styles.sectionTitle}>
             <Image className={styles.leafIcon} src={"/leaf.svg"} height={20} width={20} alt='leaf icon'></Image>
@@ -37,32 +61,35 @@ export default function Home() {
             <div className={styles.calcContainer}>
               <div className={styles.topContainer}>
                 <label htmlFor="squareFeet">Square Feet</label>
-                <input name='squareFeet' id='squareFeet' type="text" />
+                <input name='squareFeet' id='squareFeet' type="number" />
               </div>
               <div className={styles.resultsContainer}>
               {/* <div className={styles.discountRow}>$180</div> */}
                 <div className={styles.row}>
                   <span className={styles.rowLabel}>Initial</span>
-                  <span className={styles.rowCost}>$325</span>
+                  <span>
+                    <span className={styles.cost}>${initialTotal}</span>
+                    <span className={styles.costLowered}>${discountedInitialTotal}</span>
+
+                  </span>
                 </div>
                 {/* <div className={styles.discountRow}>$180</div> */}
                 <div className={styles.row}>
                   <span className={styles.rowLabel}>Recurring</span>
                   <span>
-                    <span className={styles.cost}>$150</span>
-                    <span className={styles.costLowered}>$100</span>
+                    <span className={styles.cost}>${recurringTotal}</span>
+                    <span className={styles.costLowered}>${discountedRecurringTotal}</span>
                   </span>
                 </div>
                 <div className={styles.discountBlock}>
-                  <span className={styles.text}>Discount: 25%
+                  <span style={{opacity: discountPercentage && discountPercentage > 0 ? 1 : 0}} className={styles.text}>Discount: {discountPercentage}%
                    {/* <Image src={"/check.svg"} alt='checkmark' width={22} height={22}></Image> */}
                    </span>
-                  {/* <span className={styles.rowCost}>25%</span> */}
                 </div>
               </div>
                 <div className={styles.buttonsContainer}>
-                  <button className={styles.clear}>DISCOUNT</button>
-                  <button className={styles.calculate}>CALCULATE</button>
+                  <button onClick={() => setDiscountModalOpen(true)} className={styles.clear}>DISCOUNT</button>
+                  <button onClick={calculateTotals} className={styles.calculate}>CALCULATE</button>
                 </div>
             </div>
           </div>
