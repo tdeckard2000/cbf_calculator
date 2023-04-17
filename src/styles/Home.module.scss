@@ -24,8 +24,8 @@
     background-repeat: no-repeat;
     position: relative;
     top: 0;
-    // dvh rather than vh resolves ios viewport display issue
-    height: calc(100vh - 100px); //fallback
+    // ** dvh rather than vh resolves ios viewport display issue
+    height: calc(100vh - 100px); //** fallback
     height: calc(100dvh - 100px);
 
     .calcBackdrop {
@@ -107,7 +107,6 @@
 }
 
 .resultsContainer {
-    // bottom: 0;
     background-color: #82808014;
     display: flex;
     flex-direction: column;
@@ -119,7 +118,6 @@
     width: 100%;
 
     .row {
-        // border-bottom: 2px solid #00ceee6b;
         border-bottom: 1px solid #555555b3;
         display: flex;
         justify-content: space-between;
@@ -142,12 +140,9 @@
 
     .discountBlock {
         margin: 0 auto;
-        // background-color: #3db2e4;
-        // color: white;
         color: black;
         display: flex;
         justify-content: center;
-        // width: 200px;
 
         .text {
             align-items: center;

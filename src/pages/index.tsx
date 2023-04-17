@@ -28,6 +28,9 @@ export default function Home() {
       const discountedRecurringTotal = Number((recurringTotal - (recurringTotal * (discountPercentage * .01))).toFixed(0));
       setDiscountedInitialTotal(discountedInitialTotal);
       setDiscountedRecurringTotal(discountedRecurringTotal);
+    } else {
+      setDiscountedInitialTotal(initialTotal);
+      setDiscountedRecurringTotal(recurringTotal);
     }
   }
 
@@ -64,7 +67,6 @@ export default function Home() {
                 <input name='squareFeet' id='squareFeet' type="number" />
               </div>
               <div className={styles.resultsContainer}>
-              {/* <div className={styles.discountRow}>$180</div> */}
                 <div className={styles.row}>
                   <span className={styles.rowLabel}>Initial</span>
                   <span>
@@ -73,7 +75,6 @@ export default function Home() {
 
                   </span>
                 </div>
-                {/* <div className={styles.discountRow}>$180</div> */}
                 <div className={styles.row}>
                   <span className={styles.rowLabel}>Recurring</span>
                   <span>
@@ -82,8 +83,8 @@ export default function Home() {
                   </span>
                 </div>
                 <div className={styles.discountBlock}>
-                  <span style={{opacity: discountPercentage && discountPercentage > 0 ? 1 : 0}} className={styles.text}>Discount: {discountPercentage}%
-                   {/* <Image src={"/check.svg"} alt='checkmark' width={22} height={22}></Image> */}
+                  <span style={{opacity: discountPercentage && discountPercentage > 0 ? 1 : 0}} className={styles.text}>
+                    Discount: {discountPercentage}%
                    </span>
                 </div>
               </div>
