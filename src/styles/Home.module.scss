@@ -95,9 +95,15 @@
 }
 
 .resultsContainer {
-    bottom: 0;
+    // bottom: 0;
+    background-color: #82808014;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 20px;
     position: relative;
-    height: fit-content;
+    height: 100%;
     width: 100%;
 
     .row {
@@ -109,7 +115,7 @@
         height: 35px;
 
         .rowLabel {
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .cost {
@@ -118,23 +124,24 @@
 
         .costLowered {
             margin-left: 10px;
-            font-weight: 600;
+            font-weight: 400;
         }
     }
 
     .discountBlock {
-        margin: auto;
+        margin: 0 auto;
         background-color: #3db2e4;
         color: white;
         display: flex;
         justify-content: center;
-        width: 200px;
+        // width: 200px;
 
         .text {
             align-items: center;
             display: flex;
             justify-content: center;
-            font-weight: 500;
+            font-weight: 400;
+            font-size: 14px;
             padding: 15px;
         }
     
@@ -147,10 +154,6 @@
     .rowLabel {
         font-weight: 500;
     }
-
-    .cost {
-
-    }
 }
 
 .buttonsContainer {
@@ -159,8 +162,9 @@
     column-gap: 5px;
     justify-content: space-between;
     width: 100%;
-
+    
     .clear {
+        font-size: 14px;
         background-color: #555555b3;
         border: none;
         color: white;
@@ -176,6 +180,7 @@
     }
 
     .calculate {
+        font-size: 14px;
         background-color: #3db2e4;
         border: none;
         color: white;

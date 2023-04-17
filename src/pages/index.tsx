@@ -40,12 +40,14 @@ export default function Home() {
                   </span>
                 </div>
                 <div className={styles.discountBlock}>
-                  <span className={styles.text}>Discount: 25% <Image src={"/check.svg"} alt='checkmark' width={22} height={22}></Image></span>
+                  <span className={styles.text}>Discount: 25%
+                   {/* <Image src={"/check.svg"} alt='checkmark' width={22} height={22}></Image> */}
+                   </span>
                   {/* <span className={styles.rowCost}>25%</span> */}
                 </div>
               </div>
                 <div className={styles.buttonsContainer}>
-                  <button className={styles.clear}>CLEAR</button>
+                  <button className={styles.clear}>DISCOUNT</button>
                   <button className={styles.calculate}>CALCULATE</button>
                 </div>
             </div>
