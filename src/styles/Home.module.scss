@@ -24,6 +24,8 @@
     background-repeat: no-repeat;
     position: relative;
     top: 0;
+    // dvh rather than vh resolves ios viewport display issue
+    height: calc(100vh - 100px); //fallback
     height: calc(100dvh - 100px);
 
     .calcBackdrop {
