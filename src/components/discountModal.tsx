@@ -64,10 +64,10 @@ export default function DiscountModalComponent(props: Props) {
                 </button>
                 <h1>Discount</h1>
                 <div className={styles.inputContainer}>
-                    <button style={{backgroundColor: percentage == semiannualDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(semiannualDiscount)}}>SEMIANNUAL {semiannualDiscount}%</button>
-                    <button style={{backgroundColor: percentage == quarterlyDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(quarterlyDiscount)}}>QUARTERLY {quarterlyDiscount}%</button>
-                    <button style={{backgroundColor: percentage == bimonthlyDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(bimonthlyDiscount)}}>BIMONTHLY {bimonthlyDiscount}%</button>
-                    <button style={{backgroundColor: percentage == monthlyDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(monthlyDiscount)}}>MONTHLY {monthlyDiscount}% </button>
+                    <button className={percentage === semiannualDiscount ? styles.selected : ""} onClick={() => {predefinedClicked(semiannualDiscount)}}>SEMIANNUAL {semiannualDiscount}%</button>
+                    <button className={percentage === quarterlyDiscount ? styles.selected : ""} onClick={() => {predefinedClicked(quarterlyDiscount)}}>QUARTERLY {quarterlyDiscount}%</button>
+                    <button className={percentage === bimonthlyDiscount ? styles.selected : ""} onClick={() => {predefinedClicked(bimonthlyDiscount)}}>BIMONTHLY {bimonthlyDiscount}%</button>
+                    <button className={percentage === monthlyDiscount ? styles.selected : ""} onClick={() => {predefinedClicked(monthlyDiscount)}}>MONTHLY {monthlyDiscount}% </button>
                     <button onClick={() => setShowCustomInput(true)} style={{display: showCustomInput ? "none" : "block"}}>CUSTOM</button>
                     <div style={{display: showCustomInput ? "block" : "none"}} >
                         <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyUp(event)} type="number" />

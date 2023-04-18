@@ -1,0 +1,100 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.header {
+    color: black;
+    display: block;
+    padding: 10px 0;
+    font-size: 20px;
+    font-weight: 300;
+    font-family: inherit;
+    width: 100%;
+}
+
+
+.inputsContainer {
+    // background-color: burlywood;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    h3 {
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 20px 0px;
+    }
+
+    input {
+        border: none;
+        // background-color: #555555b3;
+        // color: white;
+        border: 1px solid #808282;
+        font-family: inherit;
+        font-size: 16px;
+        padding: 10px;
+        height: 30px;
+        width: 100px;
+    }
+}
+
+.settingsButtonsContainer {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 5px;
+    
+    .cancel {
+        font-size: 14px;
+        background-color: rgba(85, 85, 85, 0.7019607843);
+        border: none;
+        color: white;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        font-family: inherit;
+        margin-top: 20px;
+        height: 50px;
+        
+        &:hover {
+            background-color: #2e2e2eb3;
+        }
+    }
+
+    .apply {
+        font-size: 14px;
+        background-color: #3db2e4;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-family: inherit;
+        margin-top: 20px;
+        height: 50px;
+
+        &:hover {
+            background-color: #379dc9;
+        }
+    }
+}
+
+@media screen and (max-height: 670px) { //iPhone 13 Mini
+
+    .inputsContainer {
+
+        div {
+            margin-top: 5px;
+        }
+    }
+
+}

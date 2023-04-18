@@ -9,7 +9,7 @@ export default function HeaderComponent() {
                 
             </div>
             <div>
-                <Image src={"/logoMain.png"} width={80.38} height={32} alt="company logo"></Image>
+                <Image src={"/logoMain.png"} width={80} height={32} alt="company logo"></Image>
             </div>
             <div>
                 {/* <Image src={"/menuIconBold.svg"} height={20} width={20} alt="manu icon"></Image> */}

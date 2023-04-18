@@ -4,6 +4,7 @@ import styles from '@/styles/Home.module.scss'
 import HeaderComponent from '@/components/header'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import DiscountModalComponent from '@/components/discountModal'
+import SettingsComponent from '@/components/settings'
 
 export default function Home() {
 
@@ -17,6 +18,7 @@ export default function Home() {
   const [discountedRecurringTotal, setDiscountedRecurringTotal] = useState<number>(0);
   const [disableCalculateButton, setDisableCalculateButton] = useState<boolean>(true);
   const [showDiscountData, setShowDiscountData] = useState<boolean>(false);
+  const [displaySettings, setDisplaySettings] = useState<boolean>(false);
 
   useEffect(() => {
     if(Number((document.getElementById("squareFeet") as HTMLInputElement).value)) {
@@ -78,36 +80,46 @@ export default function Home() {
           </div>
           <div className={styles.calcBackdrop}>
             <div className={styles.calcContainer}>
-              <div className={styles.topContainer}>
-                <label htmlFor="squareFeet">Square Feet</label>
-                <input onKeyDown={(e) => onKeyDown(e)} onChange={() => setDisableCalculateButton(false)} pattern='[0-9]*' name='squareFeet' id='squareFeet' type="number" />
+
+              <div style={{display: displaySettings? "none" : "flex"}} className={styles.page1}>
+                <div className={styles.topContainer}>
+                    <label htmlFor="squareFeet">Square Feet</label>
+                    <input onKeyDown={(e) => onKeyDown(e)} onChange={() => setDisableCalculateButton(false)} pattern='[0-9]*' name='squareFeet' id='squareFeet' type="number" />
+                  </div>
+                  <div className={styles.resultsContainer}>
+                    <div className={styles.row}>
+                      <span className={styles.rowLabel}>Initial</span>
+                      <span>
+                        <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 16 : 18}} className={styles.cost}>${initialTotal}</span>
+                        <span style={{display: showDiscountData ? "inline-block" : "none"}} className={styles.costLowered}>${discountedInitialTotal}</span>
+                      </span>
+                    </div>
+                    <div className={styles.row}>
+                      <span className={styles.rowLabel}>Recurring</span>
+                      <span>
+                        <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 16 : 18}} className={styles.cost}>${recurringTotal}</span>
+                        <span style={{display:showDiscountData ? "inline-block" : "none"}} className={styles.costLowered}>${discountedRecurringTotal}</span>
+                      </span>
+                    </div>
+                    <div className={styles.discountBlock}>
+                      <span style={{opacity: discountPercentage > 0 ? 1 : 0}} className={styles.text}>
+                        Discount: {discountPercentage}%
+                      </span>
+                    </div>
+                  </div>
+                  <div className={styles.buttonsContainer}>
+                    <button onClick={() => setDisplaySettings(true)} className={styles.settings}><Image src={"/settings2.svg"} alt='settings icon' height={25} width={25}></Image></button>
+                    <button onClick={() => setDiscountModalOpen(true)} className={styles.discount}> <Image src={"/discount.svg"} alt='discount icon' height={25} width={25}></Image></button>
+                    <button style={{opacity: disableCalculateButton ? 0.6 : 1}} disabled={disableCalculateButton} onClick={calculateTotals} className={styles.calculate}>CALCULATE</button>
+                  </div>
               </div>
-              <div className={styles.resultsContainer}>
-                <div className={styles.row}>
-                  <span className={styles.rowLabel}>Initial</span>
-                  <span>
-                    <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 16 : 18}} className={styles.cost}>${initialTotal}</span>
-                    <span style={{display: showDiscountData ? "inline-block" : "none"}} className={styles.costLowered}>${discountedInitialTotal}</span>
-                  </span>
-                </div>
-                <div className={styles.row}>
-                  <span className={styles.rowLabel}>Recurring</span>
-                  <span>
-                    <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 16 : 18}} className={styles.cost}>${recurringTotal}</span>
-                    <span style={{display:showDiscountData ? "inline-block" : "none"}} className={styles.costLowered}>${discountedRecurringTotal}</span>
-                  </span>
-                </div>
-                <div className={styles.discountBlock}>
-                  <span style={{opacity: discountPercentage > 0 ? 1 : 0}} className={styles.text}>
-                    Discount: {discountPercentage}%
-                   </span>
-                </div>
+
+              <div style={{display: displaySettings ? "flex" : "none"}} className={styles.page2}>
+                <SettingsComponent
+                  closeCallback={() => setDisplaySettings(false)}
+                ></SettingsComponent>
               </div>
-                <div className={styles.buttonsContainer}>
-                  <button onClick={() => setDiscountModalOpen(true)} className={styles.settings}><Image src={"/settings2.svg"} alt='settings icon' height={25} width={25}></Image></button>
-                  <button onClick={() => setDiscountModalOpen(true)} className={styles.discount}> <Image src={"/discount.svg"} alt='discount icon' height={25} width={25}></Image></button>
-                  <button style={{opacity: disableCalculateButton ? 0.6 : 1}} disabled={disableCalculateButton} onClick={calculateTotals} className={styles.calculate}>CALCULATE</button>
-                </div>
+            
             </div>
           </div>
         </div>

@@ -1,5 +1,14 @@
-.main {
-  
+.page1 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.page2 {
+    height: 100%;
+    width: 100%;
 }
 
 .sectionTitle {
@@ -7,7 +16,7 @@
     background-color: #2e2e2eb3;
     color: white;
     display: flex;
-    padding: 20px;
+    padding: 18px;
     font-weight: 700;
     font-size: 16px;
     justify-content: center;
@@ -25,15 +34,15 @@
     position: relative;
     top: 0;
     // ** dvh rather than vh resolves ios viewport display issue
-    height: calc(100vh - 100px); //** fallback
-    height: calc(100dvh - 100px);
+    height: calc(100vh - 80px); //** fallback
+    height: calc(100dvh - 80px);
 
     .calcBackdrop {
         background-color: rgba(0, 0, 0, 0.445);
         display: flex;
         align-items: center;
         justify-content: center;
-        height: calc(100% - 85px);
+        height: calc(100% - 81px);
         width: 100%;
     }
 }
@@ -49,7 +58,8 @@
     padding: 20px;
     height: calc(100% - 30px);
     min-width: 300px;
-    max-width: 500px;
+    max-width: 400px;
+    max-height: 600px;
     width: calc(100% - 30px);
 
     .topContainer {
@@ -180,7 +190,6 @@
         color: white;
         cursor: pointer;
         font-family: inherit;
-        margin-top: 20px;
         height: 50px;
         flex-grow: 1;
         display: flex;
@@ -207,7 +216,6 @@
         justify-content: center;
         display: flex;
         font-family: inherit;
-        margin-top: 20px;
         height: 50px;
         flex-grow: 1;
         
@@ -228,7 +236,6 @@
         color: white;
         cursor: pointer;
         font-family: inherit;
-        margin-top: 20px;
         height: 50px;
         flex-grow: 1;
 
@@ -244,17 +251,17 @@
         margin: 0;
     }
     
-    .buttonsContainer {
-        .calculate {
-            margin-top: 0;
-        }
+    // .buttonsContainer {
+    //     .calculate {
+    //         margin-top: 0;
+    //     }
 
-        .discount {
-            margin-top: 0;
-        }
+    //     .discount {
+    //         margin-top: 0;
+    //     }
 
-        .settings {
-            margin-top: 0;
-        }
-    }
+    //     .settings {
+    //         margin-top: 0;
+    //     }
+    // }
 }
