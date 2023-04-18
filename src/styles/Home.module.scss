@@ -168,12 +168,12 @@
 
 .buttonsContainer {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: .4fr .4fr 1fr;
     column-gap: 5px;
     justify-content: space-between;
     width: 100%;
     
-    .clear {
+    .discount {
         font-size: 14px;
         background-color: #555555b3;
         border: none;
@@ -183,6 +183,38 @@
         margin-top: 20px;
         height: 50px;
         flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            filter: invert(1);
+            margin: 10px 20px;
+        }
+
+        &:hover {
+            background-color: #2e2e2eb3;
+        }
+    }
+
+    .settings {
+        font-size: 14px;
+        background-color: #555555b3;
+        border: none;
+        color: white;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        font-family: inherit;
+        margin-top: 20px;
+        height: 50px;
+        flex-grow: 1;
+        
+        img {
+            filter: invert(1);
+            margin: 10px 20px;
+        }
 
         &:hover {
             background-color: #2e2e2eb3;
@@ -216,7 +248,12 @@
         .calculate {
             margin-top: 0;
         }
-        .clear {
+
+        .discount {
+            margin-top: 0;
+        }
+
+        .settings {
             margin-top: 0;
         }
     }

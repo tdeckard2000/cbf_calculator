@@ -104,7 +104,8 @@ export default function Home() {
                 </div>
               </div>
                 <div className={styles.buttonsContainer}>
-                  <button onClick={() => setDiscountModalOpen(true)} className={styles.clear}>DISCOUNT</button>
+                  <button onClick={() => setDiscountModalOpen(true)} className={styles.settings}><Image src={"/settings2.svg"} alt='settings icon' height={25} width={25}></Image></button>
+                  <button onClick={() => setDiscountModalOpen(true)} className={styles.discount}> <Image src={"/discount.svg"} alt='discount icon' height={25} width={25}></Image></button>
                   <button style={{opacity: disableCalculateButton ? 0.6 : 1}} disabled={disableCalculateButton} onClick={calculateTotals} className={styles.calculate}>CALCULATE</button>
                 </div>
             </div>

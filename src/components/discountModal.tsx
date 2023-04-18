@@ -59,12 +59,12 @@ export default function DiscountModalComponent(props: Props) {
                 <button onClick={() => close()} className={styles.closeButton}>
                     <Image src={"/close.svg"} alt="close icon" width={25} height={25}></Image>
                 </button>
-                <h1>Discount Amount</h1>
+                <h1>Discount</h1>
                 <div className={styles.inputContainer}>
-                    <button onClick={() => {predefinedClicked(semiannualDiscount)}}>SEMIANNUAL</button>
-                    <button onClick={() => {predefinedClicked(quarterlyDiscount)}}>QUARTERLY</button>
-                    <button onClick={() => {predefinedClicked(bimonthlyDiscount)}}>BIMONTHLY</button>
-                    <button onClick={() => {predefinedClicked(monthlyDiscount)}}>MONTHLY</button>
+                    <button style={{backgroundColor: percentage == semiannualDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(semiannualDiscount)}}>SEMIANNUAL {semiannualDiscount}%</button>
+                    <button style={{backgroundColor: percentage == quarterlyDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(quarterlyDiscount)}}>QUARTERLY {quarterlyDiscount}%</button>
+                    <button style={{backgroundColor: percentage == bimonthlyDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(bimonthlyDiscount)}}>BIMONTHLY {bimonthlyDiscount}%</button>
+                    <button style={{backgroundColor: percentage == monthlyDiscount ? "#555555" : ""}} onClick={() => {predefinedClicked(monthlyDiscount)}}>MONTHLY {monthlyDiscount}% </button>
                     <button onClick={() => setShowCustomInput(true)} style={{display: showCustomInput ? "none" : "block"}}>CUSTOM</button>
                     <div style={{display: showCustomInput ? "block" : "none"}} >
                         <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyUp(event)} type="number" />
