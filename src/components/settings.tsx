@@ -21,6 +21,7 @@ export default function SettingsComponent(props: Props) {
         if (!storedSettings) {
             //if no settings exist
             setDefaultSettings();
+            console.log("no settings")
         } else {
             setUserSettings(storedSettings);
         }
@@ -36,6 +37,13 @@ export default function SettingsComponent(props: Props) {
             monthly: 20
         }
         updateSettings(defaultSettings);
+
+        (document.getElementById("initial") as HTMLInputElement).value = defaultSettings.initial.toString() || "";
+        (document.getElementById("recurring") as HTMLInputElement).value = defaultSettings.recurring.toString() || "";
+        (document.getElementById("semiannual") as HTMLInputElement).value = defaultSettings.semiannual.toString() || "";
+        (document.getElementById("quarterly") as HTMLInputElement).value = defaultSettings.quarterly.toString() || "";
+        (document.getElementById("bimonthly") as HTMLInputElement).value = defaultSettings.bimonthly.toString() || "";
+        (document.getElementById("monthly") as HTMLInputElement).value = defaultSettings.monthly.toString() || "";
     }
 
     const applyClicked = () => {
