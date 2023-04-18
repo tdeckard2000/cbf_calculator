@@ -15,18 +15,20 @@ export default function DiscountModalComponent(props: Props) {
     const [quarterlyDiscount, setQuarterlyDiscount] = useState<number>(10);
     const [bimonthlyDiscount, setBimonthlyDiscount] = useState<number>(15);
     const [monthlyDiscount, setMonthlyDiscount] = useState<number>(20);
+    const [enableApplyButton, setEnableApplyButton] = useState<boolean>(false);
 
 
 
     const keyUp = (event: any) => {
         setPercentage(Number(event.target.value) || 0);
-
+        setEnableApplyButton(true);
         if(event.key === "Enter" && event.target.value < 100) {
             applyClicked();
         };
     }
 
     const applyClicked = () => {
+        setEnableApplyButton(false);
         props.setDiscountPercentage(percentage);
         props.closeCallback();
     }
@@ -46,6 +48,7 @@ export default function DiscountModalComponent(props: Props) {
     }
 
     const predefinedClicked = (percentage: number) => {
+        setEnableApplyButton(false);
         setShowCustomInput(false);
         setPercentage(percentage);
         props.setDiscountPercentage(percentage);
@@ -73,7 +76,7 @@ export default function DiscountModalComponent(props: Props) {
                 </div>
                 <div className={styles.buttonContainer}>
                     <button onClick={clearClicked} className={styles.clearButton}>CLEAR</button>
-                    <button style={{opacity: percentage > 100 ? .6 : 1}}
+                    <button style={{opacity: percentage < 100 && enableApplyButton ? 1 : .6}}
                     disabled={percentage > 100} className={styles.applyButton}
                     onClick={applyClicked}>APPLY
                     </button>
