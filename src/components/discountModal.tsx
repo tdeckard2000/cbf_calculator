@@ -5,7 +5,6 @@ import Image from "next/image";
 interface Props {
     setDiscountPercentage: Function;
     closeCallback: Function;
-    // currentDiscountPercentage: number;
 }
 
 export default function DiscountModalComponent(props: Props) {
@@ -48,7 +47,7 @@ export default function DiscountModalComponent(props: Props) {
                 </div>
                 <div className={styles.buttonContainer}>
                     <button onClick={clearClicked} className={styles.clearButton}>CLEAR</button>
-                    <button style={{opacity: percentage > 100 ? ".5" : "1"}}
+                    <button style={{opacity: percentage > 100 ? .6 : 1}}
                     disabled={percentage > 100} className={styles.applyButton}
                     onClick={applyClicked}>APPLY
                     </button>
