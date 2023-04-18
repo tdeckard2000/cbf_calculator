@@ -35,7 +35,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 300px;
+    height: fit-content;
     width: 300px;
     background-color: #ffffff;
     // border: 1px solid;
@@ -94,7 +94,24 @@
 
 
     .inputContainer {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        height: fit-content;
         position: relative;
+        row-gap: 5px;
+        margin-top: 20px;
+        width: 100%;
+
+        button {
+            border: none;
+            background-color: #555555b3;
+            color: white;
+            font-size: 14px;
+            font-family: inherit;
+            height: 50px;
+            width: 100%;
+        }
+
 
         input {
             background-color: #a5a5a5;
@@ -107,7 +124,7 @@
             height: 50px;
             text-align: center;
             width: 100%;
-            margin-top: 20px;
+            // margin-top: 20px;
 
             &:focus-visible {
                 outline: none;

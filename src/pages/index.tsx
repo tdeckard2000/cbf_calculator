@@ -86,14 +86,14 @@ export default function Home() {
                 <div className={styles.row}>
                   <span className={styles.rowLabel}>Initial</span>
                   <span>
-                    <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 14 : 16}} className={styles.cost}>${initialTotal}</span>
+                    <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 16 : 18}} className={styles.cost}>${initialTotal}</span>
                     <span style={{display: showDiscountData ? "inline-block" : "none"}} className={styles.costLowered}>${discountedInitialTotal}</span>
                   </span>
                 </div>
                 <div className={styles.row}>
                   <span className={styles.rowLabel}>Recurring</span>
                   <span>
-                    <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 14 : 16}} className={styles.cost}>${recurringTotal}</span>
+                    <span style={{textDecoration: showDiscountData ? "line-through" : "none", fontSize: showDiscountData ? 16 : 18}} className={styles.cost}>${recurringTotal}</span>
                     <span style={{display:showDiscountData ? "inline-block" : "none"}} className={styles.costLowered}>${discountedRecurringTotal}</span>
                   </span>
                 </div>

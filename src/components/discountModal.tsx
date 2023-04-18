@@ -10,6 +10,13 @@ interface Props {
 export default function DiscountModalComponent(props: Props) {
 
     const [percentage, setPercentage] = useState<number>(0);
+    const [showCustomInput, setShowCustomInput] = useState<boolean>(false)
+    const [semiannualDiscount, setSemiannualDiscount] = useState<number>(5);
+    const [quarterlyDiscount, setQuarterlyDiscount] = useState<number>(10);
+    const [bimonthlyDiscount, setBimonthlyDiscount] = useState<number>(15);
+    const [monthlyDiscount, setMonthlyDiscount] = useState<number>(20);
+
+
 
     const keyUp = (event: any) => {
         setPercentage(Number(event.target.value) || 0);
@@ -26,6 +33,7 @@ export default function DiscountModalComponent(props: Props) {
 
     const clearClicked = async () => {
         setPercentage(0);
+        setShowCustomInput(false);
         await props.setDiscountPercentage(0);
         close(true);
     }
@@ -37,6 +45,13 @@ export default function DiscountModalComponent(props: Props) {
         }
     }
 
+    const predefinedClicked = (percentage: number) => {
+        setShowCustomInput(false);
+        setPercentage(percentage);
+        props.setDiscountPercentage(percentage);
+        close(true);
+    }
+
     return(
         <div id="main" className={styles.main}>
             <div onClick={() => close()} className={styles.bgCover}></div>
@@ -46,8 +61,15 @@ export default function DiscountModalComponent(props: Props) {
                 </button>
                 <h1>Discount Amount</h1>
                 <div className={styles.inputContainer}>
-                    <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyUp(event)} type="number" />
-                    <span className={styles.percentSymbol}>%</span>
+                    <button onClick={() => {predefinedClicked(semiannualDiscount)}}>SEMIANNUAL</button>
+                    <button onClick={() => {predefinedClicked(quarterlyDiscount)}}>QUARTERLY</button>
+                    <button onClick={() => {predefinedClicked(bimonthlyDiscount)}}>BIMONTHLY</button>
+                    <button onClick={() => {predefinedClicked(monthlyDiscount)}}>MONTHLY</button>
+                    <button onClick={() => setShowCustomInput(true)} style={{display: showCustomInput ? "none" : "block"}}>CUSTOM</button>
+                    <div style={{display: showCustomInput ? "block" : "none"}} >
+                        <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyUp(event)} type="number" />
+                        <span className={styles.percentSymbol}>%</span>
+                    </div>
                 </div>
                 <div className={styles.buttonContainer}>
                     <button onClick={clearClicked} className={styles.clearButton}>CLEAR</button>
