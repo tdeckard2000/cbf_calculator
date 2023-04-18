@@ -78,7 +78,7 @@ export default function SettingsComponent(props: Props) {
                 </div>
                 <div>
                     <label htmlFor="initial">Recurring</label>
-                    <input defaultValue={userSettings?.recurring} onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="recurring" />
+                    <input defaultValue={userSettings?.recurring} onKeyUp={(e) => onKeyUp(e)} type="number" name="" id="recurring" />
                 </div>
                 <h3 style={{marginTop: "20px"}}>Discount Percent</h3>
                 <div>
