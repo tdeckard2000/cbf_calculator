@@ -11,8 +11,8 @@ export default function DiscountModalComponent(props: Props) {
 
     const [percentage, setPercentage] = useState<number>(0);
 
-    const keyDown = (event: any) => {
-        setPercentage(event.target.value | 0);
+    const keyUp = (event: any) => {
+        setPercentage(Number(event.target.value) || 0);
     }
 
     const applyClicked = () => {
@@ -42,7 +42,7 @@ export default function DiscountModalComponent(props: Props) {
                 </button>
                 <h1>Discount Amount</h1>
                 <div className={styles.inputContainer}>
-                    <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyDown(event)} type="number" />
+                    <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyUp(event)} type="number" />
                     <span className={styles.percentSymbol}>%</span>
                 </div>
                 <div className={styles.buttonContainer}>
