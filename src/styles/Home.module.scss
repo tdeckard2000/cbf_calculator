@@ -203,3 +203,19 @@
         }
     }
 }
+
+@media screen and (max-height: 670px) { //iPhone 13 Mini
+
+    .resultsContainer {
+        margin: 0;
+    }
+    
+    .buttonsContainer {
+        .calculate {
+            margin-top: 0;
+        }
+        .clear {
+            margin-top: 0;
+        }
+    }
+}
