@@ -13,6 +13,10 @@ export default function DiscountModalComponent(props: Props) {
 
     const keyUp = (event: any) => {
         setPercentage(Number(event.target.value) || 0);
+
+        if(event.key === "Enter" && event.target.value < 100) {
+            applyClicked();
+        };
     }
 
     const applyClicked = () => {

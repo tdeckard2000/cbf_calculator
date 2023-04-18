@@ -21,12 +21,10 @@ export default function Home() {
   useEffect(() => {
     if(Number((document.getElementById("squareFeet") as HTMLInputElement).value)) {
       setDisableCalculateButton(false);
-      console.log("boo")
     }
   }, [discountPercentage])
 
   const calculateTotals = () => {
-    console.log("calc")
     const squareFeet = Number((document.getElementById("squareFeet") as HTMLInputElement).value);
     const initialTotal = Number((squareFeet * initialCostPer).toFixed(0));
     const recurringTotal = Number((squareFeet * recurringCostPer).toFixed(0));
@@ -49,6 +47,12 @@ export default function Home() {
 
   const closeModal = () => {
     setDiscountModalOpen(false);
+  }
+
+  const onKeyDown = (event: any) => {
+    if(event.key === "Enter") {
+      calculateTotals();
+    }
   }
   
   return (
@@ -76,7 +80,7 @@ export default function Home() {
             <div className={styles.calcContainer}>
               <div className={styles.topContainer}>
                 <label htmlFor="squareFeet">Square Feet</label>
-                <input onChange={() => setDisableCalculateButton(false)} pattern='[0-9]*' name='squareFeet' id='squareFeet' type="number" />
+                <input onKeyDown={(e) => onKeyDown(e)} onChange={() => setDisableCalculateButton(false)} pattern='[0-9]*' name='squareFeet' id='squareFeet' type="number" />
               </div>
               <div className={styles.resultsContainer}>
                 <div className={styles.row}>
