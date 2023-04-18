@@ -35,7 +35,7 @@
     div {
         display: flex;
         justify-content: space-between;
-        margin: 20px 20px 0px;
+        margin: 12px 20px 0px;
     }
 
     input {
@@ -89,11 +89,11 @@
     }
 }
 
-@media screen and (max-height: 700px) { //iPhone 13 Mini
+@media screen and (max-height: 670px) { //iPhone 13 Mini
 
     .inputsContainer {
             margin: 0;
-
+            
         div {
             margin-top: 5px;
         }
