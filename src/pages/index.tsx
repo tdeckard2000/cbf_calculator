@@ -76,7 +76,7 @@ export default function Home() {
             <div className={styles.calcContainer}>
               <div className={styles.topContainer}>
                 <label htmlFor="squareFeet">Square Feet</label>
-                <input onChange={() => setDisableCalculateButton(false)} name='squareFeet' id='squareFeet' type="number" />
+                <input onChange={() => setDisableCalculateButton(false)} pattern='[0-9]*' name='squareFeet' id='squareFeet' type="number" />
               </div>
               <div className={styles.resultsContainer}>
                 <div className={styles.row}>
