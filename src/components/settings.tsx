@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/styles/SettingsComponent.module.scss"
 import Image from "next/image";
+import { getSettings, updateSettings } from "@/storageHandler";
 
 interface Props {
     closeCallback: Function;
@@ -14,10 +15,12 @@ export default function SettingsComponent(props: Props) {
 
     const [enableApply, setEnableApply] = useState<boolean>(false);
     const [userSettings, setUserSettings] = useState<ISettings>();
-    // const [semiannualDiscount, setSemiannualDiscount] = useState<number>(5);
-    // const [quarterlyDiscount, setQuarterlyDiscount] = useState<number>(10);
-    // const [bimonthlyDiscount, setBimonthlyDiscount] = useState<number>(15);
-    // const [monthlyDiscount, setMonthlyDiscount] = useState<number>(20);
+    // const [initial, setInitial] = useState<number>();
+    // const [recurring, setRecurring] = useState<number>();
+    // const [semiannualDiscount, setSemiannualDiscount] = useState<number>();
+    // const [quarterlyDiscount, setQuarterlyDiscount] = useState<number>();
+    // const [bimonthlyDiscount, setBimonthlyDiscount] = useState<number>();
+    // const [monthlyDiscount, setMonthlyDiscount] = useState<number>();
 
     useEffect (() => {
         initializeSettings();
@@ -25,14 +28,12 @@ export default function SettingsComponent(props: Props) {
     }, [])
 
     const initializeSettings = () => {
-        const localRaw = localStorage.getItem("settings");
-        if (!localRaw) {
+        const storedSettings = getSettings();
+        if (!storedSettings) {
             //if no settings exist
             setDefaultSettings();
         } else {
-            const settings = JSON.parse(localRaw);
-            setUserSettings(settings);
-            return settings;
+            setUserSettings(storedSettings);
         }
     }
 
@@ -45,26 +46,38 @@ export default function SettingsComponent(props: Props) {
             bimonthly: 15,
             monthly: 20
         }
-        localStorage.setItem("settings", JSON.stringify(defaultSettings));
+        updateSettings(defaultSettings);
     }
 
     const applyClicked = () => {
-        localStorage.setItem("settings", JSON.stringify(userSettings));
+        if(!userSettings) return;
+        updateSettings(userSettings);
+        props.closeCallback();
     }
 
     const onKeyUp = (event: any) => {
         const inputId: "initial" | "recurring" | "semiannual" | "quarterly" | "bimonthly" | "monthly" = event.target.id;
-        const localRaw = localStorage.getItem("settings");
-        const inputValue = event.target.value;
-        if(!localRaw) return
-        const localSavedData: ISettings = JSON.parse(localRaw);
-        localSavedData[inputId] = inputValue;
-        setUserSettings(localSavedData);
-        setEnableApply(true);
+        const currentSettings = userSettings;
+        if(!currentSettings) return
+        currentSettings[inputId] = event.target.value;
+        setEnableApply(true)
     }
 
     const cancelClicked = () => {
+        revertChanges();
+        props.closeCallback(); 
         console.log("CANCEL TIME")
+    }
+
+    const revertChanges = () => {
+        const localSettings = getSettings();
+        if(!localSettings) return
+        (document.getElementById("initial") as HTMLInputElement).value = localSettings.initial.toString() || "";
+        (document.getElementById("recurring") as HTMLInputElement).value = localSettings.recurring.toString() || "";
+        (document.getElementById("semiannual") as HTMLInputElement).value = localSettings.semiannual.toString() || "";
+        (document.getElementById("quarterly") as HTMLInputElement).value = localSettings.quarterly.toString() || "";
+        (document.getElementById("bimonthly") as HTMLInputElement).value = localSettings.bimonthly.toString() || "";
+        (document.getElementById("monthly") as HTMLInputElement).value = localSettings.monthly.toString() || "";
     }
 
     return(
@@ -99,8 +112,8 @@ export default function SettingsComponent(props: Props) {
                 </div>
             </div>
             <div className={styles.settingsButtonsContainer}>
-                <button onClick={() => {props.closeCallback(); cancelClicked()}} className={styles.cancel}>Cancel</button>
-                <button onClick={() => {applyClicked; setEnableApply(false)}} disabled={!enableApply} style={{opacity: enableApply ? 1 : .6}} className={styles.apply}>Apply</button>
+                <button onClick={() => {cancelClicked()}} className={styles.cancel}>Cancel</button>
+                <button onClick={() => {applyClicked(); setEnableApply(false)}} disabled={!enableApply} style={{opacity: enableApply ? 1 : .6}} className={styles.apply}>Apply</button>
             </div>
         </div>
     )

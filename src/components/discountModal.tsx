@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/DiscountModal.module.scss"
 import Image from "next/image";
+import { getSettings } from "@/storageHandler";
 
 interface Props {
     setDiscountPercentage: Function;
@@ -17,7 +18,19 @@ export default function DiscountModalComponent(props: Props) {
     const [monthlyDiscount, setMonthlyDiscount] = useState<number>(20);
     const [enableApplyButton, setEnableApplyButton] = useState<boolean>(false);
 
+    useEffect(() => {
+        window.addEventListener("storage", storageEventHandler);
+        storageEventHandler();
+    })
 
+    const storageEventHandler = () => {
+        const localSettings = getSettings();
+        setSemiannualDiscount(localSettings?.semiannual || 0);
+        setQuarterlyDiscount(localSettings?.quarterly || 0);
+        setBimonthlyDiscount(localSettings?.bimonthly || 0);
+        setMonthlyDiscount(localSettings?.monthly || 0);
+
+      }
 
     const keyUp = (event: any) => {
         setPercentage(Number(event.target.value) || 0);
@@ -75,7 +88,7 @@ export default function DiscountModalComponent(props: Props) {
                     </div>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button onClick={clearClicked} className={styles.clearButton}>RESET</button>
+                    <button onClick={clearClicked} className={styles.clearButton}>REMOVE</button>
                     <button style={{opacity: percentage < 100 && enableApplyButton ? 1 : .6}}
                     disabled={percentage > 100} className={styles.applyButton}
                     onClick={applyClicked}>APPLY

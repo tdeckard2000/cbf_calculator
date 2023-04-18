@@ -5,13 +5,14 @@ import HeaderComponent from '@/components/header'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import DiscountModalComponent from '@/components/discountModal'
 import SettingsComponent from '@/components/settings'
+import { getSettings } from '@/storageHandler'
 
 export default function Home() {
 
   const [discountModalOpen, setDiscountModalOpen] = useState<boolean>(false);
   const [discountPercentage, setDiscountPercentage] = useState<number>(0);
-  const [initialCostPer, setInitialCostPer] = useState<number>(1.85);
-  const [recurringCostPer, setRecurringCostPer] = useState<number>(1.5);
+  const [initialCostPer, setInitialCostPer] = useState<number>(0);
+  const [recurringCostPer, setRecurringCostPer] = useState<number>(0);
   const [initialTotal, setInitialTotal] = useState<number>(0);
   const [recurringTotal, setRecurringTotal] = useState<number>(0);
   const [discountedInitialTotal, setDiscountedInitialTotal] = useState<number>(0);
@@ -20,11 +21,34 @@ export default function Home() {
   const [showDiscountData, setShowDiscountData] = useState<boolean>(false);
   const [displaySettings, setDisplaySettings] = useState<boolean>(false);
 
+  // useEffect(() => {
+  //   const localRaw = localStorage.getItem("settings");
+  //   if(!localRaw) {
+
+  //   } else {
+  //     const settings:ISettings = JSON.parse(localRaw);
+  //     setInitialCostPer(settings.initial);
+  //     setRecurringCostPer(settings.recurring);
+  //   }
+  // }, [])
+
+  useEffect(() => {
+    window.addEventListener("storage", storageEventHandler);
+    storageEventHandler();
+  }, []);
+
   useEffect(() => {
     if(Number((document.getElementById("squareFeet") as HTMLInputElement).value)) {
       setDisableCalculateButton(false);
     }
   }, [discountPercentage])
+
+  const storageEventHandler = () => {
+    const localSettings = getSettings();
+    setInitialCostPer(Number(localSettings?.initial));
+    setRecurringCostPer(Number(localSettings?.recurring));
+    setDisableCalculateButton(false);
+  }
 
   const calculateTotals = () => {
     const squareFeet = Number((document.getElementById("squareFeet") as HTMLInputElement).value);
