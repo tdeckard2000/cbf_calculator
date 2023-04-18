@@ -88,6 +88,7 @@
             height: 50px;
             text-align: center;
             width: 100%;
+            cursor: pointer;
     
             &:focus-visible {
                 outline: none;
@@ -178,7 +179,7 @@
 
 .buttonsContainer {
     display: grid;
-    grid-template-columns: .4fr .4fr 1fr;
+    grid-template-columns: 1fr 1fr 3fr;
     column-gap: 5px;
     justify-content: space-between;
     width: 100%;
@@ -250,18 +251,5 @@
     .resultsContainer {
         margin: 0;
     }
-    
-    // .buttonsContainer {
-    //     .calculate {
-    //         margin-top: 0;
-    //     }
 
-    //     .discount {
-    //         margin-top: 0;
-    //     }
-
-    //     .settings {
-    //         margin-top: 0;
-    //     }
-    // }
 }

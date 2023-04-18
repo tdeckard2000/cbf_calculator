@@ -75,7 +75,7 @@ export default function DiscountModalComponent(props: Props) {
                     </div>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button onClick={clearClicked} className={styles.clearButton}>CLEAR</button>
+                    <button onClick={clearClicked} className={styles.clearButton}>RESET</button>
                     <button style={{opacity: percentage < 100 && enableApplyButton ? 1 : .6}}
                     disabled={percentage > 100} className={styles.applyButton}
                     onClick={applyClicked}>APPLY
