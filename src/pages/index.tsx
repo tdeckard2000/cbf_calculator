@@ -18,7 +18,7 @@ export default function Home() {
   const [disableCalculateButton, setDisableCalculateButton] = useState<boolean>(true);
   const [showDiscountData, setShowDiscountData] = useState<boolean>(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if(Number((document.getElementById("squareFeet") as HTMLInputElement).value)) {
       setDisableCalculateButton(false);
       console.log("boo")

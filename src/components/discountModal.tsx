@@ -42,7 +42,7 @@ export default function DiscountModalComponent(props: Props) {
                 </button>
                 <h1>Discount Amount</h1>
                 <div className={styles.inputContainer}>
-                    <input id="percentage" onKeyUp={(event) => keyDown(event)} type="number" />
+                    <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyDown(event)} type="number" />
                     <span className={styles.percentSymbol}>%</span>
                 </div>
                 <div className={styles.buttonContainer}>
