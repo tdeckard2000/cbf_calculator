@@ -5,26 +5,15 @@ import { getSettings, updateSettings } from "@/storageHandler";
 
 interface Props {
     closeCallback: Function;
-    // semiannualDiscount: number;
-    // quarterlyDiscount: number;
-    // bimonthlyDiscount: number;
-    // monthlyDiscount: number;
 }
 
 export default function SettingsComponent(props: Props) {
 
     const [enableApply, setEnableApply] = useState<boolean>(false);
     const [userSettings, setUserSettings] = useState<ISettings>();
-    // const [initial, setInitial] = useState<number>();
-    // const [recurring, setRecurring] = useState<number>();
-    // const [semiannualDiscount, setSemiannualDiscount] = useState<number>();
-    // const [quarterlyDiscount, setQuarterlyDiscount] = useState<number>();
-    // const [bimonthlyDiscount, setBimonthlyDiscount] = useState<number>();
-    // const [monthlyDiscount, setMonthlyDiscount] = useState<number>();
 
     useEffect (() => {
         initializeSettings();
-        // populateFields()
     }, [])
 
     const initializeSettings = () => {

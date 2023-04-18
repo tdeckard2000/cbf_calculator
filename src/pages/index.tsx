@@ -21,17 +21,6 @@ export default function Home() {
   const [showDiscountData, setShowDiscountData] = useState<boolean>(false);
   const [displaySettings, setDisplaySettings] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   const localRaw = localStorage.getItem("settings");
-  //   if(!localRaw) {
-
-  //   } else {
-  //     const settings:ISettings = JSON.parse(localRaw);
-  //     setInitialCostPer(settings.initial);
-  //     setRecurringCostPer(settings.recurring);
-  //   }
-  // }, [])
-
   useEffect(() => {
     window.addEventListener("storage", storageEventHandler);
     storageEventHandler();
