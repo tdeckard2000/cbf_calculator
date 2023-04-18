@@ -97,7 +97,7 @@ export default function SettingsComponent(props: Props) {
                 </div>
                 <div>
                     <label htmlFor="initial">Monthly</label>
-                    <input defaultValue={userSettings?.monthly} onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="monthly" />
+                    <input defaultValue={userSettings?.monthly} onKeyUp={(e) => {onKeyUp(e)}} pattern='[0-9]*' type="number" name="" id="monthly" />
                 </div>
             </div>
             <div className={styles.settingsButtonsContainer}>
