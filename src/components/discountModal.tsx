@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/DiscountModal.module.scss"
 import Image from "next/image";
-import { getSettings } from "@/storageHandler";
+import { localStorageGet } from "@/storageHandler";
 
 interface Props {
     setDiscountPercentage: Function;
@@ -24,7 +24,7 @@ export default function DiscountModalComponent(props: Props) {
     })
 
     const storageEventHandler = () => {
-        const localSettings = getSettings();
+        const localSettings = localStorageGet();
         setSemiannualDiscount(localSettings?.semiannual || 0);
         setQuarterlyDiscount(localSettings?.quarterly || 0);
         setBimonthlyDiscount(localSettings?.bimonthly || 0);

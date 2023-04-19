@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/styles/SettingsComponent.module.scss"
-import Image from "next/image";
-import { getSettings, updateSettings } from "@/storageHandler";
+import { localStorageGet, localStorageUpdate } from "@/storageHandler";
 
 interface Props {
     closeCallback: Function;
@@ -17,17 +16,16 @@ export default function SettingsComponent(props: Props) {
     }, [])
 
     const initializeSettings = () => {
-        const storedSettings = getSettings();
+        const storedSettings = localStorageGet();
         if (!storedSettings) {
             //if no settings exist
-            setDefaultSettings();
-            console.log("no settings")
+            applyDefaultSettings();
         } else {
             setUserSettings(storedSettings);
         }
     }
 
-    const setDefaultSettings = () => {
+    const applyDefaultSettings = () => {
         const defaultSettings: ISettings = {
             initial: 1.85,
             recurring: 1.45,
@@ -36,7 +34,8 @@ export default function SettingsComponent(props: Props) {
             bimonthly: 15,
             monthly: 20
         }
-        updateSettings(defaultSettings);
+        localStorageUpdate(defaultSettings);
+        setUserSettings(defaultSettings);
 
         (document.getElementById("initial") as HTMLInputElement).value = defaultSettings.initial.toString() || "";
         (document.getElementById("recurring") as HTMLInputElement).value = defaultSettings.recurring.toString() || "";
@@ -48,7 +47,7 @@ export default function SettingsComponent(props: Props) {
 
     const applyClicked = () => {
         if(!userSettings) return;
-        updateSettings(userSettings);
+        localStorageUpdate(userSettings);
         props.closeCallback();
     }
 
@@ -57,17 +56,17 @@ export default function SettingsComponent(props: Props) {
         const currentSettings = userSettings;
         if(!currentSettings) return
         currentSettings[inputId] = event.target.value;
-        setEnableApply(true)
+        setUserSettings({...currentSettings});
+        setEnableApply(true);
     }
 
     const cancelClicked = () => {
         revertChanges();
         props.closeCallback(); 
-        console.log("CANCEL TIME")
     }
 
     const revertChanges = () => {
-        const localSettings = getSettings();
+        const localSettings = localStorageGet();
         if(!localSettings) return
         (document.getElementById("initial") as HTMLInputElement).value = localSettings.initial.toString() || "";
         (document.getElementById("recurring") as HTMLInputElement).value = localSettings.recurring.toString() || "";
@@ -84,28 +83,28 @@ export default function SettingsComponent(props: Props) {
                 <h3>Cost Per ft<sup style={{fontSize: "10px"}}>2</sup></h3>
                 <div>
                     <label htmlFor="initial">Initial</label>
-                    <input defaultValue={userSettings?.initial} onKeyUp={(e) => onKeyUp(e)} type="number" name="" id="initial" />
+                    <input onKeyUp={(e) => onKeyUp(e)} type="number" name="" id="initial" />
                 </div>
                 <div>
                     <label htmlFor="initial">Recurring</label>
-                    <input defaultValue={userSettings?.recurring} onKeyUp={(e) => onKeyUp(e)} type="number" name="" id="recurring" />
+                    <input onKeyUp={(e) => onKeyUp(e)} type="number" name="" id="recurring" />
                 </div>
                 <h3 style={{marginTop: "20px"}}>Discount Percent</h3>
                 <div>
                     <label htmlFor="initial">Semiannual</label>
-                    <input defaultValue={userSettings?.semiannual} onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="semiannual" />
+                    <input onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="semiannual" />
                 </div>
                 <div>
                     <label htmlFor="initial">Quarterly</label>
-                    <input defaultValue={userSettings?.quarterly} onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="quarterly" />
+                    <input onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="quarterly" />
                 </div>
                 <div>
                     <label htmlFor="initial">Bimonthly</label>
-                    <input defaultValue={userSettings?.bimonthly} onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="bimonthly" />
+                    <input onKeyUp={(e) => onKeyUp(e)} pattern='[0-9]*' type="number" name="" id="bimonthly" />
                 </div>
                 <div>
                     <label htmlFor="initial">Monthly</label>
-                    <input defaultValue={userSettings?.monthly} onKeyUp={(e) => {onKeyUp(e)}} pattern='[0-9]*' type="number" name="" id="monthly" />
+                    <input onKeyUp={(e) => {onKeyUp(e)}} pattern='[0-9]*' type="number" name="" id="monthly" />
                 </div>
             </div>
             <div className={styles.settingsButtonsContainer}>

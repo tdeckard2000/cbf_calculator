@@ -1,9 +1,9 @@
-const updateSettings = (settings: ISettings) => {
+const localStorageUpdate = (settings: ISettings) => {
     localStorage.setItem("settings", JSON.stringify(settings));
     window.dispatchEvent(new Event("storage"));
 }
 
-const getSettings = ():ISettings | null => {
+const localStorageGet = ():ISettings | null => {
     const localRaw = localStorage.getItem("settings");
     if(!localRaw) {
         return null
@@ -14,6 +14,6 @@ const getSettings = ():ISettings | null => {
 }
 
 export {
-    updateSettings,
-    getSettings
+    localStorageUpdate,
+    localStorageGet
 }

@@ -5,7 +5,7 @@ import HeaderComponent from '@/components/header'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import DiscountModalComponent from '@/components/discountModal'
 import SettingsComponent from '@/components/settings'
-import { getSettings } from '@/storageHandler'
+import { localStorageGet } from '@/storageHandler'
 
 export default function Home() {
 
@@ -28,13 +28,12 @@ export default function Home() {
 
   useEffect(() => {
     if(Number((document.getElementById("squareFeet") as HTMLInputElement).value)) {
-      // setDisableCalculateButton(false);
       calculateTotals();
     }
   }, [discountPercentage])
 
   const storageEventHandler = () => {
-    const localSettings = getSettings();
+    const localSettings = localStorageGet();
     setInitialCostPer(Number(localSettings?.initial));
     setRecurringCostPer(Number(localSettings?.recurring));
     setDisableCalculateButton(false);
