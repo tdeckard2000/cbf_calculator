@@ -49,6 +49,10 @@
         height: 30px;
         width: 100px;
         border-radius: 0;
+
+        &:focus-visible {
+            outline: none;
+        }
     }
 }
 
