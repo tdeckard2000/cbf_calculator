@@ -22,6 +22,7 @@ export default function SettingsComponent(props: Props) {
             applyDefaultSettings();
         } else {
             setUserSettings(storedSettings);
+            updateInputFields(storedSettings);
         }
     }
 
@@ -36,13 +37,7 @@ export default function SettingsComponent(props: Props) {
         }
         localStorageUpdate(defaultSettings);
         setUserSettings(defaultSettings);
-
-        (document.getElementById("initial") as HTMLInputElement).value = defaultSettings.initial.toString() || "";
-        (document.getElementById("recurring") as HTMLInputElement).value = defaultSettings.recurring.toString() || "";
-        (document.getElementById("semiannual") as HTMLInputElement).value = defaultSettings.semiannual.toString() || "";
-        (document.getElementById("quarterly") as HTMLInputElement).value = defaultSettings.quarterly.toString() || "";
-        (document.getElementById("bimonthly") as HTMLInputElement).value = defaultSettings.bimonthly.toString() || "";
-        (document.getElementById("monthly") as HTMLInputElement).value = defaultSettings.monthly.toString() || "";
+        updateInputFields(defaultSettings);
     }
 
     const applyClicked = () => {
@@ -68,12 +63,16 @@ export default function SettingsComponent(props: Props) {
     const revertChanges = () => {
         const localSettings = localStorageGet();
         if(!localSettings) return
-        (document.getElementById("initial") as HTMLInputElement).value = localSettings.initial.toString() || "";
-        (document.getElementById("recurring") as HTMLInputElement).value = localSettings.recurring.toString() || "";
-        (document.getElementById("semiannual") as HTMLInputElement).value = localSettings.semiannual.toString() || "";
-        (document.getElementById("quarterly") as HTMLInputElement).value = localSettings.quarterly.toString() || "";
-        (document.getElementById("bimonthly") as HTMLInputElement).value = localSettings.bimonthly.toString() || "";
-        (document.getElementById("monthly") as HTMLInputElement).value = localSettings.monthly.toString() || "";
+        updateInputFields(localSettings);
+    }
+
+    const updateInputFields = (settings: ISettings) => {
+        (document.getElementById("initial") as HTMLInputElement).value = settings.initial.toString() || "";
+        (document.getElementById("recurring") as HTMLInputElement).value = settings.recurring.toString() || "";
+        (document.getElementById("semiannual") as HTMLInputElement).value = settings.semiannual.toString() || "";
+        (document.getElementById("quarterly") as HTMLInputElement).value = settings.quarterly.toString() || "";
+        (document.getElementById("bimonthly") as HTMLInputElement).value = settings.bimonthly.toString() || "";
+        (document.getElementById("monthly") as HTMLInputElement).value = settings.monthly.toString() || "";
     }
 
     return(
