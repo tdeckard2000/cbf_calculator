@@ -28,7 +28,8 @@ export default function Home() {
 
   useEffect(() => {
     if(Number((document.getElementById("squareFeet") as HTMLInputElement).value)) {
-      setDisableCalculateButton(false);
+      // setDisableCalculateButton(false);
+      calculateTotals();
     }
   }, [discountPercentage])
 
