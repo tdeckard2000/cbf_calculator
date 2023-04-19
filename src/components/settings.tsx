@@ -9,7 +9,6 @@ interface Props {
 export default function SettingsComponent(props: Props) {
 
     const [enableApply, setEnableApply] = useState<boolean>(false);
-    const [userSettings, setUserSettings] = useState<ISettings>();
 
     useEffect (() => {
         initializeSettings();
@@ -18,10 +17,8 @@ export default function SettingsComponent(props: Props) {
     const initializeSettings = () => {
         const storedSettings = localStorageGet();
         if (!storedSettings) {
-            //if no settings exist
             applyDefaultSettings();
         } else {
-            setUserSettings(storedSettings);
             updateInputFields(storedSettings);
         }
     }
@@ -36,22 +33,16 @@ export default function SettingsComponent(props: Props) {
             monthly: 20
         }
         localStorageUpdate(defaultSettings);
-        setUserSettings(defaultSettings);
         updateInputFields(defaultSettings);
     }
 
     const applyClicked = () => {
-        if(!userSettings) return;
-        localStorageUpdate(userSettings);
+        const newSettings = getSettingsFromInputFields()
+        localStorageUpdate(newSettings);
         props.closeCallback();
     }
 
     const onKeyUp = (event: any) => {
-        const inputId: "initial" | "recurring" | "semiannual" | "quarterly" | "bimonthly" | "monthly" = event.target.id;
-        const currentSettings = userSettings;
-        if(!currentSettings) return
-        currentSettings[inputId] = event.target.value;
-        setUserSettings({...currentSettings});
         setEnableApply(true);
     }
 
@@ -74,6 +65,17 @@ export default function SettingsComponent(props: Props) {
         (document.getElementById("bimonthly") as HTMLInputElement).value = settings.bimonthly.toString() || "";
         (document.getElementById("monthly") as HTMLInputElement).value = settings.monthly.toString() || "";
     }
+
+    const getSettingsFromInputFields = ():ISettings => {
+        return {
+            initial: Number((document.getElementById("initial") as HTMLInputElement).value),
+            recurring: Number((document.getElementById("recurring") as HTMLInputElement).value),
+            semiannual: Number((document.getElementById("semiannual") as HTMLInputElement).value),
+            quarterly: Number((document.getElementById("quarterly") as HTMLInputElement).value),
+            bimonthly: Number((document.getElementById("bimonthly") as HTMLInputElement).value),
+            monthly: Number((document.getElementById("monthly") as HTMLInputElement).value)
+        }
+    };
 
     return(
         <div className={styles.main}>
