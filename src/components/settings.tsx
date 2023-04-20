@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/styles/SettingsComponent.module.scss"
-import { localStorageGet, localStorageUpdate } from "@/storageHandler";
+// import { localStorageUpdate } from "@/storageHandler";
+import { getUserSettings, updateUserSettings } from "@/dbHandler";
 
 interface Props {
     closeCallback: Function;
+    showSettings: boolean;
+    setShowLoadingModal: Function;
+    setShowSavingModal: Function;
 }
 
 export default function SettingsComponent(props: Props) {
@@ -11,35 +15,30 @@ export default function SettingsComponent(props: Props) {
     const [enableApply, setEnableApply] = useState<boolean>(false);
 
     useEffect (() => {
-        initializeSettings();
-    }, [])
-
-    const initializeSettings = () => {
-        const storedSettings = localStorageGet();
-        if (!storedSettings) {
-            applyDefaultSettings();
-        } else {
-            updateInputFields(storedSettings);
+        if(props.showSettings) {
+            initializeSettings();
         }
+    }, [props.showSettings])
+
+    const initializeSettings = async () => {
+        clearInputFields();
+        props.setShowLoadingModal(true);
+        const settingsFromDb = await getUserSettings();
+        updateInputFields(settingsFromDb);
+
+        setTimeout(() => {
+            props.setShowLoadingModal(false);
+        }, 800);
     }
 
-    const applyDefaultSettings = () => {
-        const defaultSettings: ISettings = {
-            initial: 1.85,
-            recurring: 1.45,
-            semiannual: 5,
-            quarterly: 10,
-            bimonthly: 15,
-            monthly: 20
-        }
-        localStorageUpdate(defaultSettings);
-        updateInputFields(defaultSettings);
-    }
-
-    const applyClicked = () => {
-        const newSettings = getSettingsFromInputFields()
-        localStorageUpdate(newSettings);
+    const applyClicked = async () => {
+        props.setShowSavingModal(true);
+        const newSettings = getSettingsFromInputFields();
+        await updateUserSettings(newSettings);
         props.closeCallback();
+        setTimeout(() => {
+            props.setShowSavingModal(false);
+        }, 800)
     }
 
     const onKeyUp = (event: any) => {
@@ -52,9 +51,9 @@ export default function SettingsComponent(props: Props) {
     }
 
     const revertChanges = () => {
-        const localSettings = localStorageGet();
-        if(!localSettings) return
-        updateInputFields(localSettings);
+        // const localSettings = localStorageGet();
+        // if(!localSettings) return
+        // updateInputFields(localSettings);
     }
 
     const updateInputFields = (settings: ISettings) => {
@@ -76,6 +75,15 @@ export default function SettingsComponent(props: Props) {
             monthly: Number((document.getElementById("monthly") as HTMLInputElement).value)
         }
     };
+
+    const clearInputFields = () => {
+        (document.getElementById("initial") as HTMLInputElement).value = "";
+        (document.getElementById("recurring") as HTMLInputElement).value = "";
+        (document.getElementById("semiannual") as HTMLInputElement).value = "";
+        (document.getElementById("quarterly") as HTMLInputElement).value = "";
+        (document.getElementById("bimonthly") as HTMLInputElement).value = "";
+        (document.getElementById("monthly") as HTMLInputElement).value = "";
+    }
 
     return(
         <div className={styles.main}>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/DiscountModal.module.scss"
 import Image from "next/image";
-import { localStorageGet } from "@/storageHandler";
+// import { localStorageGet } from "@/storageHandler";
+import { getUserSettings } from "@/dbHandler";
 
 interface Props {
     setDiscountPercentage: Function;
     closeCallback: Function;
+    showDiscountModal: boolean;
 }
 
 export default function DiscountModalComponent(props: Props) {
@@ -19,12 +21,15 @@ export default function DiscountModalComponent(props: Props) {
     const [enableApplyButton, setEnableApplyButton] = useState<boolean>(false);
 
     useEffect(() => {
-        window.addEventListener("storage", storageEventHandler);
-        storageEventHandler();
-    })
+        if(props.showDiscountModal) {
+            console.log("load discountModal data")
+            storageEventHandler();
+        }
+    }, [props.showDiscountModal])
 
-    const storageEventHandler = () => {
-        const localSettings = localStorageGet();
+    const storageEventHandler = async () => {
+        console.log("")
+        const localSettings = await getUserSettings();
         setSemiannualDiscount(localSettings?.semiannual || 0);
         setQuarterlyDiscount(localSettings?.quarterly || 0);
         setBimonthlyDiscount(localSettings?.bimonthly || 0);

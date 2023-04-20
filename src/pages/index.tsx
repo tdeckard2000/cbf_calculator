@@ -5,11 +5,16 @@ import HeaderComponent from '@/components/header'
 import { useEffect, useState } from 'react'
 import DiscountModalComponent from '@/components/discountModal'
 import SettingsComponent from '@/components/settings'
-import { localStorageGet } from '@/storageHandler'
+import { getUserSettings } from '@/dbHandler';
+import StatusModalComponent from '@/components/statusModal'
 
 export default function Home() {
 
-  const [discountModalOpen, setDiscountModalOpen] = useState<boolean>(false);
+  const [showDiscountModal, setShowDiscountModal] = useState<boolean>(false);
+  const [showDiscountData, setShowDiscountData] = useState<boolean>(false);
+  const [showLoadingModal, setShowLoadingModal] = useState<boolean>(false);
+  const [showSavingModal, setShowSavingModal] = useState<boolean>(false);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
   const [discountPercentage, setDiscountPercentage] = useState<number>(0);
   const [initialCostPer, setInitialCostPer] = useState<number>(0);
   const [recurringCostPer, setRecurringCostPer] = useState<number>(0);
@@ -18,11 +23,9 @@ export default function Home() {
   const [discountedInitialTotal, setDiscountedInitialTotal] = useState<number>(0);
   const [discountedRecurringTotal, setDiscountedRecurringTotal] = useState<number>(0);
   const [disableCalculateButton, setDisableCalculateButton] = useState<boolean>(true);
-  const [showDiscountData, setShowDiscountData] = useState<boolean>(false);
-  const [displaySettings, setDisplaySettings] = useState<boolean>(false);
 
   useEffect(() => {
-    window.addEventListener("storage", storageEventHandler);
+    // window.addEventListener("storage", storageEventHandler);
     storageEventHandler();
   }, []);
 
@@ -32,11 +35,16 @@ export default function Home() {
     }
   }, [discountPercentage])
 
-  const storageEventHandler = () => {
-    const localSettings = localStorageGet();
+  const storageEventHandler = async () => {
+    setShowLoadingModal(true);
+    const localSettings = await getUserSettings();
+    console.log(localSettings)
     setInitialCostPer(Number(localSettings?.initial));
     setRecurringCostPer(Number(localSettings?.recurring));
     setDisableCalculateButton(false);
+    setTimeout(() => {
+      setShowLoadingModal(false);
+    }, 800)
   }
 
   const calculateTotals = () => {
@@ -61,7 +69,7 @@ export default function Home() {
   }
 
   const closeModal = () => {
-    setDiscountModalOpen(false);
+    setShowDiscountModal(false);
   }
 
   const onKeyDown = (event: any) => {
@@ -79,9 +87,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <main className={styles.main}>
+        <div style={{display: showLoadingModal ? "block" : "none"}}>
+          <StatusModalComponent>
+            <div>Loading ...</div>
+          </StatusModalComponent>
+        </div>
+        <div style={{display: showSavingModal ? "block" : "none"}}>
+          <StatusModalComponent>
+            <div>Saving ...</div>
+          </StatusModalComponent>
+        </div>
         <HeaderComponent></HeaderComponent>
-        <div style={{display: discountModalOpen ? "block" : "none"}}>
+        <div style={{display: showDiscountModal ? "block" : "none"}}>
           <DiscountModalComponent
+            showDiscountModal={showDiscountModal}
             closeCallback={closeModal}
             setDiscountPercentage={setDiscountPercentage}
           ></DiscountModalComponent>
@@ -94,7 +113,7 @@ export default function Home() {
           <div className={styles.calcBackdrop}>
             <div className={styles.calcContainer}>
 
-              <div style={{display: displaySettings? "none" : "flex"}} className={styles.page1}>
+              <div style={{display: showSettings? "none" : "flex"}} className={styles.page1}>
                 <div className={styles.topContainer}>
                     <label htmlFor="squareFeet">Square Feet</label>
                     <input onKeyDown={(e) => onKeyDown(e)} onChange={() => setDisableCalculateButton(false)} pattern='[0-9]*' name='squareFeet' id='squareFeet' type="number" />
@@ -121,15 +140,18 @@ export default function Home() {
                     </div>
                   </div>
                   <div className={styles.buttonsContainer}>
-                    <button onClick={() => setDisplaySettings(true)} className={styles.settings}><Image src={"/settings2.svg"} alt='settings icon' height={25} width={25}></Image></button>
-                    <button onClick={() => setDiscountModalOpen(true)} className={styles.discount}> <Image src={"/discount.svg"} alt='discount icon' height={25} width={25}></Image></button>
+                    <button onClick={() => {setShowSettings(true)}} className={styles.settings}><Image src={"/settings2.svg"} alt='settings icon' height={25} width={25}></Image></button>
+                    <button onClick={() => setShowDiscountModal(true)} className={styles.discount}> <Image src={"/discount.svg"} alt='discount icon' height={25} width={25}></Image></button>
                     <button style={{opacity: disableCalculateButton ? 0.6 : 1}} disabled={disableCalculateButton} onClick={calculateTotals} className={styles.calculate}>CALCULATE</button>
                   </div>
               </div>
 
-              <div style={{display: displaySettings ? "flex" : "none"}} className={styles.page2}>
+              <div style={{display: showSettings ? "flex" : "none"}} className={styles.page2}>
                 <SettingsComponent
-                  closeCallback={() => setDisplaySettings(false)}
+                  showSettings={showSettings}
+                  setShowLoadingModal={setShowLoadingModal}
+                  setShowSavingModal={setShowSavingModal}
+                  closeCallback={() => setShowSettings(false)}
                 ></SettingsComponent>
               </div>
             

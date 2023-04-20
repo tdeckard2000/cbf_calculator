@@ -1,0 +1,29 @@
+.backdrop {
+    background-color: rgba(0, 0, 0, 0.259);
+    position: absolute;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    z-index: 1500;
+    // display: none;
+}
+
+.modal {
+    background-color: white;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.609);
+    border-radius: 6px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    height: 100px;
+    width: 200px;
+}
+
+.bodyText {
+    font-weight: 500;
+}
