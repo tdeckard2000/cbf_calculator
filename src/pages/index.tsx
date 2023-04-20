@@ -7,6 +7,7 @@ import DiscountModalComponent from '@/components/discountModal'
 import SettingsComponent from '@/components/settings'
 import { getUserSettings } from '@/dbHandler';
 import StatusModalComponent from '@/components/statusModal'
+import PasswordModalComponent from '@/components/passwordModal'
 
 export default function Home() {
 
@@ -14,6 +15,7 @@ export default function Home() {
   const [showDiscountData, setShowDiscountData] = useState<boolean>(false);
   const [showLoadingModal, setShowLoadingModal] = useState<boolean>(false);
   const [showSavingModal, setShowSavingModal] = useState<boolean>(false);
+  const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [discountPercentage, setDiscountPercentage] = useState<number>(0);
   const [initialCostPer, setInitialCostPer] = useState<number>(0);
@@ -68,10 +70,6 @@ export default function Home() {
     }
   }
 
-  const closeModal = () => {
-    setShowDiscountModal(false);
-  }
-
   const onKeyDown = (event: any) => {
     if(event.key === "Enter") {
       calculateTotals();
@@ -87,6 +85,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <main className={styles.main}>
+        <div style={{display: showPasswordModal ? "block" : "none"}}>
+          <PasswordModalComponent
+            cancelCallback={() => setShowPasswordModal(false)}
+            validPasswordCallback={() => setShowSettings(true)}
+            showPasswordModal={showPasswordModal}
+          ></PasswordModalComponent>
+        </div>
         <div style={{display: showLoadingModal ? "block" : "none"}}>
           <StatusModalComponent>
             <div>Loading ...</div>
@@ -101,7 +106,7 @@ export default function Home() {
         <div style={{display: showDiscountModal ? "block" : "none"}}>
           <DiscountModalComponent
             showDiscountModal={showDiscountModal}
-            closeCallback={closeModal}
+            closeCallback={() => setShowDiscountModal(false)}
             setDiscountPercentage={setDiscountPercentage}
           ></DiscountModalComponent>
         </div>
@@ -140,7 +145,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className={styles.buttonsContainer}>
-                    <button onClick={() => {setShowSettings(true)}} className={styles.settings}><Image src={"/settings2.svg"} alt='settings icon' height={25} width={25}></Image></button>
+                    <button onClick={() => {setShowPasswordModal(true)}} className={styles.settings}><Image src={"/settings2.svg"} alt='settings icon' height={25} width={25}></Image></button>
                     <button onClick={() => setShowDiscountModal(true)} className={styles.discount}> <Image src={"/discount.svg"} alt='discount icon' height={25} width={25}></Image></button>
                     <button style={{opacity: disableCalculateButton ? 0.6 : 1}} disabled={disableCalculateButton} onClick={calculateTotals} className={styles.calculate}>CALCULATE</button>
                   </div>

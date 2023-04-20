@@ -58,8 +58,16 @@ export default function DiscountModalComponent(props: Props) {
         close(true);
     }
 
+    const customClicked = () => {
+        setShowCustomInput(true);
+        setTimeout(() => {
+            document.getElementById("percentage")?.focus();
+        }, 10)
+    }
+
     const close = (clearValue?: boolean) => {
         props.closeCallback();
+        setShowCustomInput(false);
         if(clearValue) {
             (document.getElementById("percentage") as HTMLInputElement).value = "";
         }
@@ -86,7 +94,7 @@ export default function DiscountModalComponent(props: Props) {
                     <button className={percentage === quarterlyDiscount ? styles.selected : ""} onClick={() => {predefinedClicked(quarterlyDiscount)}}>QUARTERLY</button>
                     <button className={percentage === bimonthlyDiscount ? styles.selected : ""} onClick={() => {predefinedClicked(bimonthlyDiscount)}}>BIMONTHLY</button>
                     <button className={percentage === monthlyDiscount ? styles.selected : ""} onClick={() => {predefinedClicked(monthlyDiscount)}}>MONTHLY</button>
-                    <button onClick={() => setShowCustomInput(true)} style={{display: showCustomInput ? "none" : "block"}}>CUSTOM</button>
+                    <button onClick={customClicked} style={{display: showCustomInput ? "none" : "block"}}>CUSTOM</button>
                     <div style={{display: showCustomInput ? "block" : "none"}} >
                         <input pattern='[0-9]*' id="percentage" onKeyUp={(event) => keyUp(event)} type="number" />
                         <span className={styles.percentSymbol}>%</span>
