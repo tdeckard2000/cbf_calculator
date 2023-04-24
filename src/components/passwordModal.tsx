@@ -19,7 +19,6 @@ export default function PasswordModalComponent (props: Props) {
 
     const submitClicked = (e: FormEvent) => {
         e.preventDefault();
-        console.log(e)
         const inputValue = (document.getElementById("password") as HTMLInputElement).value;
         if(passwordIsValid(inputValue)) {
             closeAndClearInput();
@@ -34,9 +33,8 @@ export default function PasswordModalComponent (props: Props) {
     }
     
     const passwordIsValid = (password: string): boolean => {
-        console.log(password, " vs ", process.env.NEXT_PUBLIC_SETTINGS_PASSWORD)
         if(password === process.env.NEXT_PUBLIC_SETTINGS_PASSWORD) {
-            console.log("value")
+            sessionStorage.setItem("passwordEntered", "true");
             return true;
         } else {
             setInvalidPassword(true);
@@ -45,7 +43,8 @@ export default function PasswordModalComponent (props: Props) {
     }
 
     return (
-        <div className={styles.backdrop}>
+        <div className={styles.main}>
+            <div onClick={closeAndClearInput} className={styles.backdrop}></div>
             <div className={styles.modal}>
                 <h1>Password</h1>
                 <form action="">

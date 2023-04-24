@@ -8,32 +8,29 @@ interface Props {
     setDiscountPercentage: Function;
     closeCallback: Function;
     showDiscountModal: boolean;
+    localSettings: ISettings;
 }
 
 export default function DiscountModalComponent(props: Props) {
 
     const [percentage, setPercentage] = useState<number>(0);
     const [showCustomInput, setShowCustomInput] = useState<boolean>(false)
-    const [semiannualDiscount, setSemiannualDiscount] = useState<number>(5);
-    const [quarterlyDiscount, setQuarterlyDiscount] = useState<number>(10);
-    const [bimonthlyDiscount, setBimonthlyDiscount] = useState<number>(15);
-    const [monthlyDiscount, setMonthlyDiscount] = useState<number>(20);
+    const [semiannualDiscount, setSemiannualDiscount] = useState<number>(0);
+    const [quarterlyDiscount, setQuarterlyDiscount] = useState<number>(0);
+    const [bimonthlyDiscount, setBimonthlyDiscount] = useState<number>(0);
+    const [monthlyDiscount, setMonthlyDiscount] = useState<number>(0);
     const [enableApplyButton, setEnableApplyButton] = useState<boolean>(false);
 
     useEffect(() => {
-        if(props.showDiscountModal) {
-            console.log("load discountModal data")
-            storageEventHandler();
-        }
-    }, [props.showDiscountModal])
+        setDiscountValues();
+    }, [props.localSettings])
 
-    const storageEventHandler = async () => {
-        console.log("")
-        const localSettings = await getUserSettings();
-        setSemiannualDiscount(localSettings?.semiannual || 0);
-        setQuarterlyDiscount(localSettings?.quarterly || 0);
-        setBimonthlyDiscount(localSettings?.bimonthly || 0);
-        setMonthlyDiscount(localSettings?.monthly || 0);
+    const setDiscountValues = async () => {
+        // const localSettings = await getUserSettings();
+        setSemiannualDiscount(props.localSettings?.semiannual || 0);
+        setQuarterlyDiscount(props.localSettings?.quarterly || 0);
+        setBimonthlyDiscount(props.localSettings?.bimonthly || 0);
+        setMonthlyDiscount(props.localSettings?.monthly || 0);
 
       }
 

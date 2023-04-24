@@ -8,15 +8,19 @@ interface Props {
     showSettings: boolean;
     setShowLoadingModal: Function;
     setShowSavingModal: Function;
+    settingsAppliedCallback: Function;
 }
 
 export default function SettingsComponent(props: Props) {
 
     const [enableApply, setEnableApply] = useState<boolean>(false);
+    const [showSessionExpired, setShowSessionExpired] = useState<boolean>(false);
 
     useEffect (() => {
         if(props.showSettings) {
+            //When page is opened
             initializeSettings();
+            setShowSessionExpired(false);
         }
     }, [props.showSettings])
 
@@ -32,13 +36,20 @@ export default function SettingsComponent(props: Props) {
     }
 
     const applyClicked = async () => {
-        props.setShowSavingModal(true);
-        const newSettings = getSettingsFromInputFields();
-        await updateUserSettings(newSettings);
-        props.closeCallback();
-        setTimeout(() => {
-            props.setShowSavingModal(false);
-        }, 800)
+        const hasAccess = sessionStorage.getItem("passwordEntered");
+        if(hasAccess === "true") {
+            props.setShowSavingModal(true);
+            const newSettings = getSettingsFromInputFields();
+            await updateUserSettings(newSettings);
+            props.closeCallback();
+            props.settingsAppliedCallback();
+            // setTimeout(() => {
+                props.setShowSavingModal(false);
+            // }, 800)
+        } else {
+            setShowSessionExpired(true);
+            console.warn("User has not entered password.")
+        }
     }
 
     const onKeyUp = (event: any) => {
@@ -46,14 +57,7 @@ export default function SettingsComponent(props: Props) {
     }
 
     const cancelClicked = () => {
-        revertChanges();
         props.closeCallback(); 
-    }
-
-    const revertChanges = () => {
-        // const localSettings = localStorageGet();
-        // if(!localSettings) return
-        // updateInputFields(localSettings);
     }
 
     const updateInputFields = (settings: ISettings) => {
@@ -116,6 +120,7 @@ export default function SettingsComponent(props: Props) {
                     <input onKeyUp={(e) => {onKeyUp(e)}} pattern='[0-9]*' type="number" name="" id="monthly" />
                 </div>
             </div>
+            <div style={{textAlign: "center", color: "red", display: showSessionExpired? "block" : "none", fontSize: "12px"}}>Session Expired. Go back and enter password.</div>
             <div className={styles.settingsButtonsContainer}>
                 <button onClick={() => {cancelClicked()}} className={styles.cancel}>Cancel</button>
                 <button onClick={() => {applyClicked(); setEnableApply(false)}} disabled={!enableApply} style={{opacity: enableApply ? 1 : .6}} className={styles.apply}>Apply</button>

@@ -11,7 +11,7 @@ export const getUserSettings = async () => {
 export const updateUserSettings = async (userSettings: ISettings) => {
 
     try {
-        const response = await fetch("/api/userSettings", {
+        await fetch("/api/userSettings", {
             method: "POST",
             body: JSON.stringify(userSettings)
         });
@@ -20,13 +20,4 @@ export const updateUserSettings = async (userSettings: ISettings) => {
     } catch (error) {
         console.warn("Error with update settings request: ", error);
     }
-
-
-    // console.log("update: ", formattedUserSettings)
-    // try {
-        
-    //     return;
-    // } catch (err) {
-    //     console.warn(err);
-    // }
 }

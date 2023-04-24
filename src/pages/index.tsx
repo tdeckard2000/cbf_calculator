@@ -18,17 +18,15 @@ export default function Home() {
   const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [discountPercentage, setDiscountPercentage] = useState<number>(0);
-  const [initialCostPer, setInitialCostPer] = useState<number>(0);
-  const [recurringCostPer, setRecurringCostPer] = useState<number>(0);
   const [initialTotal, setInitialTotal] = useState<number>(0);
   const [recurringTotal, setRecurringTotal] = useState<number>(0);
   const [discountedInitialTotal, setDiscountedInitialTotal] = useState<number>(0);
   const [discountedRecurringTotal, setDiscountedRecurringTotal] = useState<number>(0);
   const [disableCalculateButton, setDisableCalculateButton] = useState<boolean>(true);
+  const [localSettings, setLocalSettings] = useState<ISettings>({initial: 0, recurring: 0, semiannual: 0, quarterly: 0, bimonthly: 0, monthly: 0})
 
   useEffect(() => {
-    // window.addEventListener("storage", storageEventHandler);
-    storageEventHandler();
+    updateSettingsFromDB();
   }, []);
 
   useEffect(() => {
@@ -37,12 +35,10 @@ export default function Home() {
     }
   }, [discountPercentage])
 
-  const storageEventHandler = async () => {
+  const updateSettingsFromDB = async () => {
     setShowLoadingModal(true);
-    const localSettings = await getUserSettings();
-    console.log(localSettings)
-    setInitialCostPer(Number(localSettings?.initial));
-    setRecurringCostPer(Number(localSettings?.recurring));
+    const settingsFromDB = await getUserSettings();
+    setLocalSettings({...settingsFromDB});
     setDisableCalculateButton(false);
     setTimeout(() => {
       setShowLoadingModal(false);
@@ -51,8 +47,8 @@ export default function Home() {
 
   const calculateTotals = () => {
     const squareFeet = Number((document.getElementById("squareFeet") as HTMLInputElement).value);
-    const initialTotal = Number((squareFeet * initialCostPer).toFixed(0));
-    const recurringTotal = Number((squareFeet * recurringCostPer).toFixed(0));
+    const initialTotal = Number((squareFeet * localSettings.initial).toFixed(0));
+    const recurringTotal = Number((squareFeet * localSettings.recurring).toFixed(0));
     setInitialTotal(initialTotal);
     setRecurringTotal(recurringTotal);
     setDisableCalculateButton(true);
@@ -108,6 +104,7 @@ export default function Home() {
             showDiscountModal={showDiscountModal}
             closeCallback={() => setShowDiscountModal(false)}
             setDiscountPercentage={setDiscountPercentage}
+            localSettings={localSettings}
           ></DiscountModalComponent>
         </div>
         <div className={styles.calcBg}>
@@ -157,6 +154,7 @@ export default function Home() {
                   setShowLoadingModal={setShowLoadingModal}
                   setShowSavingModal={setShowSavingModal}
                   closeCallback={() => setShowSettings(false)}
+                  settingsAppliedCallback={updateSettingsFromDB}
                 ></SettingsComponent>
               </div>
             

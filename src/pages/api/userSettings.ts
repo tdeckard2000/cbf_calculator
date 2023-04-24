@@ -9,7 +9,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             const client = await clientPromise;
             const db = client.db("canBeFresh")
             const response = await db.collection("userSettings").updateOne({name: "userSettings"}, {$set: {userSettings: userSettings}});
-            console.log(response);
             res.status(200).json({"test": "tset"});
         } catch (error) {
             res.json({"error": "Error saving new settings."});
