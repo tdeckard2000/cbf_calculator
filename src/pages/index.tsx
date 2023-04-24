@@ -38,6 +38,10 @@ export default function Home() {
   const updateSettingsFromDB = async () => {
     setShowLoadingModal(true);
     const settingsFromDB = await getUserSettings();
+    if(!settingsFromDB) {
+      console.warn("No settings retrieved. Settings: ", settingsFromDB);
+      return;
+    }
     setLocalSettings({...settingsFromDB});
     setDisableCalculateButton(false);
     setTimeout(() => {
